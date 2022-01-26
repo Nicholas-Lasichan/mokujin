@@ -2,7 +2,7 @@ import datetime
 
 from src import tkfinder
 from src.resources import const, embed
-from discord_components import Button, ActionRow
+from nextcord import Button, ActionRow
 
 
 def get_character_name_from_content(content):
