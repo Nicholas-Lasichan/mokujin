@@ -1,4 +1,4 @@
-import nextcord
+import discord
 from random import randint
 import re
 
@@ -6,7 +6,7 @@ MOVE_NOT_FOUND_TITLE = 'Move not found'
 
 def move_embed(character, move):
     """Returns the embed message for character and move"""
-    embed = nextcord.Embed(title=character['proper_name'],
+    embed = discord.Embed(title=character['proper_name'],
                           colour=0x00EAFF,
                           url=character['online_webpage'],
                           description='**Move: ' + move['Command'] + '**')
@@ -56,21 +56,21 @@ def move_list_embed(character, move_list, move_type):
     for move in move_list:
         desc_string += move + '\n'
 
-    embed = nextcord.Embed(title=character['proper_name'] + ' ' + move_type.lower() + ':',
+    embed = discord.Embed(title=character['proper_name'] + ' ' + move_type.lower() + ':',
                           colour=0x00EAFF,
                           description=desc_string)
     return embed
 
 
 def error_embed(err):
-    embed = nextcord.Embed(title='Error',
+    embed = discord.Embed(title='Error',
                           colour=0xFF4500,
                           description=err)
     return embed
 
 
 def success_embed(message):
-    embed = nextcord.Embed(title='Success',
+    embed = discord.Embed(title='Success',
                           colour=0x3ddb2c,
                           description=message)
     return embed
@@ -81,7 +81,7 @@ def similar_moves_embed(similar_moves, character_name):
     for i in range(len(similar_moves)):
         similar_moves[i] = f'**{i+1}**. {similar_moves[i]}'
 
-    embed = nextcord.Embed(title=MOVE_NOT_FOUND_TITLE, colour=0xfcba03,
+    embed = discord.Embed(title=MOVE_NOT_FOUND_TITLE, colour=0xfcba03,
                           description='Similar moves from {}\n{}'
                           .format(character_name, '\n'.join(similar_moves)))
     return embed
@@ -95,7 +95,7 @@ def help_embed():
            "?feedback message\t\t\t- send message including sender name to the devs \n\n " \
            "This bot deletes its messages after 20 seconds normally. You can configure this by using !auto-delete " \
            "function "
-    embed = nextcord.Embed(title='Commands', description=text, colour=0x37ba25)
+    embed = discord.Embed(title='Commands', description=text, colour=0x37ba25)
     embed.set_author(name='Author: Tib#1303')
 
     return embed
@@ -105,6 +105,6 @@ def thank_embed():
     text = "\n\n" \
            "Much thanks and love especially to T7Chicken Team, Ruxx, BKNR, Vesper, Maxwell and Evil. \n\n" \
            "This project won't be possible without you guys <3"
-    embed = nextcord.Embed(title='Commands', description=text, colour=0x37ba25)
+    embed = discord.Embed(title='Commands', description=text, colour=0x37ba25)
     embed.set_author(name='Author: Tib')
     return embed
