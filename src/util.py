@@ -4,7 +4,6 @@ import nextcord
 
 from src import tkfinder
 from src.resources import const, embed
-from nextcord import Button, ActionRow, ButtonStyle, ComponentType
 
 
 def get_character_name_from_content(content):
@@ -48,7 +47,8 @@ def display_moves_by_type(character, move_type):
     elif len(move_list) == 1:
         character_move = tkfinder.get_move(character, move_list[0])
         if character_move and "Tags" in character_move:
-            result["components"] = ActionRow(create_components(character_move))
+            print()
+            #result["components"] = ActionRow(create_components(character_move))
         result["embed"] = embed.move_embed(character, character_move)
     elif len(move_list) > 1:
         result["embed"] = embed.move_list_embed(character, move_list, move_type)
@@ -64,10 +64,10 @@ def create_components(character_move):
         data['disabled'] = True
         data['type'] = 2
         if tag == "Rage Art" or tag == "Rage Drive":
-            data['style'] = ButtonStyle.danger
+            #data['style'] = ButtonStyle.danger
             component_list.append(data)
         else:
-            data['style'] = ButtonStyle.success
+            #data['style'] = ButtonStyle.success
             component_list.append(data)
     #component_list.sort(key=lambda val: const.SORT_ORDER[val.label])
 
@@ -95,6 +95,6 @@ def display_moves_by_input(character, original_move):
             "type": 1,
             "components": components
         }
-        result["Components"] = ActionRow(data)
+        #result["Components"] = ActionRow(data)
 
     return result
