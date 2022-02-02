@@ -1,8 +1,10 @@
 import datetime
 
+import nextcord
+
 from src import tkfinder
 from src.resources import const, embed
-from nextcord import Button, ActionRow
+from nextcord import Button, ActionRow, ButtonStyle, ComponentType
 
 
 def get_character_name_from_content(content):
@@ -55,15 +57,21 @@ def display_moves_by_type(character, move_type):
 
 
 def create_components(character_move):
-    tags = character_move["Tags"]
-    components = []
-    for tag in tags:
+    component_list =[]
+    data = {}
+    for tag in character_move["Tags"]:
+        data['label'] = tag
+        data['disabled'] = True
+        data['type'] = 2
         if tag == "Rage Art" or tag == "Rage Drive":
-            components.append(Button(label=tag, disabled=True, style=4))
+            data['style'] = ButtonStyle.danger
+            component_list.append(data)
         else:
-            components.append(Button(label=tag, disabled=True, style=3))
-    components.sort(key=lambda val: const.SORT_ORDER[val.label])
-    return components
+            data['style'] = ButtonStyle.success
+            component_list.append(data)
+    #component_list.sort(key=lambda val: const.SORT_ORDER[val.label])
+
+    return component_list
 
 
 def display_moves_by_input(character, original_move):
@@ -82,6 +90,11 @@ def display_moves_by_input(character, original_move):
             similar_moves = tkfinder.get_similar_moves(original_move, character_name)
             result["embed"] = embed.similar_moves_embed(similar_moves, character_name)
     if character_move and "Tags" in character_move and len(character_move["Tags"]) > 0:
-        result["components"] = ActionRow(create_components(character_move))
+        components= create_components(character_move)
+        data = {
+            "type": 1,
+            "components": components
+        }
+        result["Components"] = ActionRow(data)
 
     return result

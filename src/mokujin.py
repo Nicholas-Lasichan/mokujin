@@ -4,10 +4,10 @@ import logging
 import os
 import sys
 import configurator
+import interactions
 
 sys.path.insert(1, (os.path.dirname(os.path.dirname(__file__))))
 from functools import reduce
-from nextcord.ext import commands
 from src import tkfinder, util
 from src.resources import embed, const
 from github import Github
@@ -186,9 +186,10 @@ async def on_message(message):
             else:
                 result = {"embed": embed.error_embed(f'Character {original_name} does not exist.')}
                 delete_after = 5
-            if "components" in result:
-                bot_message = await channel.send(embed=result["embed"], delete_after=delete_after,
-                                                 components=result["components"])
+            if "Components" in result:
+                bot_message = await channel.send(embed=result["embed"], delete_after=delete_after)
+                print(result["Components"])
+                bot_message._handle_components([result["Components"]])
             else:
                 bot_message = await channel.send(embed=result["embed"], delete_after=delete_after)
             if embed.MOVE_NOT_FOUND_TITLE == bot_message.embeds[0].title:
